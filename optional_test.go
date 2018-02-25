@@ -34,6 +34,18 @@ func TestOf(t *testing.T) {
 	assert.Equal(t,a, result.Get())
 }
 
+func TestOfNil(t *testing.T) {
+	// Given
+	var a *mockObject = nil
+	// When
+	evilCode := func() {
+		Of(a)
+	}
+	// Then
+	assert.PanicsWithValue(t,"nonNilValue can not be nil!", evilCode)
+
+}
+
 func TestEmpty(t *testing.T) {
 	// Given
 	a := Empty()
@@ -42,4 +54,3 @@ func TestEmpty(t *testing.T) {
 	// Then
 	assert.False(t, isPresent)
 }
-
