@@ -84,7 +84,6 @@ func TestOptionalImpl_OrElse(t *testing.T) {
 	a := Of(1)
 	// When
 	result := a.OrElse(2)
-
 	// Then
 	assert.Equal(t, 1, result)
 }
@@ -94,9 +93,26 @@ func TestOptionalImpl_OrElse2(t *testing.T) {
 	a := Empty()
 	// When
 	result := a.OrElse("Default")
-
 	// Then
 	assert.Equal(t, "Default", result)
+}
+
+func TestOptionalImpl_OrElseGet(t *testing.T) {
+	// Given
+	a := Of(1)
+	// When
+	result := a.OrElseGet(func() int { return 2 })
+	// Then
+	assert.Equal(t, 1, result)
+}
+
+func TestOptionalImpl_OrElseGet2(t *testing.T) {
+	// Given
+	a := Empty()
+	// When
+	result := a.OrElseGet(func() int { return 2 })
+	// Then
+	assert.Equal(t, 2, result)
 }
 
 func TestEmpty(t *testing.T) {

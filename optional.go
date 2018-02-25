@@ -34,6 +34,9 @@ type Optional interface {
 	// Returns the value if a value is present else it returns the defaultValue.
 	OrElse(defaultValue interface{}) interface{}
 
+	// Returns the value if present else the supplier is used to produce a default value.
+	OrElseGet(supplier interface{}) interface{}
+
 	// Runs the given consumer with the encapsulated value if it is present.
 	IfPresent(consumer interface{})
 }

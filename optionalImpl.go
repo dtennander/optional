@@ -21,6 +21,18 @@ func (o *optionalImpl) OrElse(defaultValue interface{}) interface{} {
 	return defaultValue
 }
 
+func (o *optionalImpl) OrElseGet(supplier interface{}) interface{} {
+	switch {
+	// First we always trigger runtime error to fail fast!
+	case !f.IsValid(f.Supplier, supplier):
+		panic("Argument must be a Supplier")
+	case o.isPresent:
+		return o.value
+	default:
+		return f.CallSupplier(supplier)
+	}
+}
+
 func (o *optionalImpl) IsPresent() bool {
 	return o.isPresent
 }
