@@ -16,7 +16,7 @@ func applyPredicate(o *optionalImpl, funcValue reflect.Value) Optional {
 	valType := valValue.Type()
 	funcType := funcValue.Type()
 	// Checking whether element type is convertible to function's first argument's type.
-	if !valType.ConvertibleTo(funcType.In(0)) {
+	if !valType.AssignableTo(funcType.In(0)) {
 		panic("Predicate's argument is not compatible with this optional.")
 	}
 

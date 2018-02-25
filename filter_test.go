@@ -7,10 +7,10 @@ import (
 
 func TestOptionalImpl_Filter(t *testing.T) {
 	// Given
-	a := getOptional(1)
+	a := Of(1)
 	// When
-	b := a.Filter(func(a mockObject) bool {
-		return a.value == 1
+	b := a.Filter(func(i int) bool {
+		return i == 1
 	})
 	// Then
 	assert.True(t, b.IsPresent())
@@ -29,8 +29,8 @@ func TestOptionalImpl_Filter2(t *testing.T) {
 
 func TestOptionalImpl_Filter3(t *testing.T) {
 	// Given
-	optA := getOptional(1)
-	evilPredicate := func(a *mockObject) bool { return true }
+	optA := Of(1)
+	evilPredicate := func(i string) bool { return true }
 	// When
 	evilCall := func() {
 		optA.Filter(evilPredicate)
@@ -42,7 +42,7 @@ func TestOptionalImpl_Filter3(t *testing.T) {
 func TestOptionalImpl_Filter4(t *testing.T) {
 	// Given
 	a := getOptional(1)
-	evilPredicate := func(a mockObject) mockObject { return a }
+	evilPredicate := func(a int) int { return a }
 	// When
 	evilCall := func() {
 		a.Filter(evilPredicate) // Not a function

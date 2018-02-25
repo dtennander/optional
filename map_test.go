@@ -19,8 +19,8 @@ func TestOptionalImpl_Map(t *testing.T) {
 
 func TestOptionalImpl_Map2(t *testing.T) {
 	// Given
-	optA := getOptional(1)
-	evilMap := func(a *mockObject) *mockObject { return a }
+	optA := Of(1)
+	evilMap := func(a string) string { return a }
 	// When
 	evilCall := func() {
 		optA.Map(evilMap)
