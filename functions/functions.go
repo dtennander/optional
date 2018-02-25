@@ -19,9 +19,13 @@ const (
 	// Map is any function taking one argument and returning another.
 	//   f: X -> Y
 	Map
+
+	// Supplier is any function taking no argument and returning one.
+	//   f: Ø -> X
+	Supplier
 )
 
-// CallFunction calls the given function with the given argument and returns the result.
+// CallFunction calls the given function with the given argument and returns the resulting reflect.Value.
 // Will panic if it is not possible.
 func CallFunction(function interface{}, argument interface{}) reflect.Value {
 	valValue := reflect.ValueOf(argument)
@@ -34,6 +38,11 @@ func CallFunction(function interface{}, argument interface{}) reflect.Value {
 func Consume(consumer interface{}, argument interface{}) {
 	valValue := reflect.ValueOf(argument)
 	reflect.ValueOf(consumer).Call([]reflect.Value{valValue})
+}
+
+// CallSupplier calls the given supplier and returns the return value.
+func CallSupplier(supplier interface{}) interface{} {
+	return reflect.ValueOf(supplier).Call([]reflect.Value{})[0].Interface()
 }
 
 // TakesArgument returns true if the given function can take the given argument.
@@ -53,9 +62,16 @@ func IsValid(functionType functionType, function interface{}) bool {
 		return isConsumer(funcType)
 	case Map:
 		return isMap(funcType)
+	case Supplier:
+		return isSupplier(funcType)
 	default:
 		return false
 	}
+}
+
+func isSupplier(funcType reflect.Type) bool {
+	return isFunction(funcType) &&
+		funcType.NumIn() == 0 && funcType.NumOut() == 1
 }
 
 func isPredicate(funcType reflect.Type) bool {
@@ -65,7 +81,8 @@ func isPredicate(funcType reflect.Type) bool {
 }
 
 func isConsumer(consumer reflect.Type) bool {
-	return isFunction(consumer) && consumer.NumIn() == 1 && consumer.NumOut() == 0
+	return isFunction(consumer) &&
+		consumer.NumIn() == 1 && consumer.NumOut() == 0
 }
 
 func isMap(funcType reflect.Type) bool {
