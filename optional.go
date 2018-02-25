@@ -33,6 +33,14 @@ type Optional interface {
 
 	// Returns the value if a value is present else it returns the defaultValue.
 	OrElse(defaultValue interface{}) interface{}
+
+	// Runs the given consumer with the encapsulated value if it is present.
+	IfPresent(consumer interface{})
+}
+
+type optionalImpl struct {
+	isPresent bool
+	value     interface{}
 }
 
 // Of constructs an Optional from a value separate from nil.
@@ -65,11 +73,6 @@ func OfPossibleNil(value interface{}) Optional {
 // Empty constructs an empty optional.
 func Empty() Optional {
 	return &optionalImpl{isPresent: false, value: nil}
-}
-
-type optionalImpl struct {
-	isPresent bool
-	value     interface{}
 }
 
 func (o *optionalImpl) Get() interface{} {

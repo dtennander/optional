@@ -18,7 +18,11 @@ func checkIfTypeIsMap(funcType reflect.Type) {
 }
 
 func isNotFunction(funcType reflect.Type) bool {
-	return funcType.Kind() != reflect.Func
+	return !isFunction(funcType)
+}
+
+func isFunction(funcType reflect.Type) bool {
+	return funcType.Kind() == reflect.Func
 }
 
 func isNotOneToOneFunction(funcType reflect.Type) bool {
