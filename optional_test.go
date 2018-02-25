@@ -46,6 +46,25 @@ func TestOfNil(t *testing.T) {
 
 }
 
+func TestOfPossibleNil(t *testing.T) {
+	// Given
+	var a *mockObject = nil
+	// When
+	optional := OfPossibleNil(a)
+	// Then
+	assert.False(t, optional.IsPresent())
+}
+
+func TestOfPossibleNil2(t *testing.T) {
+	// Given
+	a := mockObject{1}
+	// When
+	optional := OfPossibleNil(a)
+	// Then
+	assert.True(t, optional.IsPresent())
+	assert.Equal(t, a, optional.Get())
+}
+
 func TestOptionalImpl_OrElse(t *testing.T) {
 	// Given
 	a := Of(1)
