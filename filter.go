@@ -2,15 +2,27 @@ package optional
 
 import "reflect"
 
+// Returns an empty Optional if the predicate is not met.
+// Otherwise the current value is passed along.
 func (o *optionalImpl) Filter(predicateFunc interface{}) Optional {
 	funcValue := reflect.ValueOf(predicateFunc)
 	checkIfTypeIsPredicate(funcValue.Type())
 	if o.isPresent {
 		return applyPredicate(o, funcValue)
-	} else {
-		return Empty()
+	}
+	return Empty()
+}
+
+func checkIfTypeIsPredicate(funcType reflect.Type) {
+	if isNotFunction(funcType) || isNotOneToOneFunction(funcType) || isNotPredicate(funcType) {
+		panic("Argument must be a predicate function.")
 	}
 }
+
+func isNotPredicate(funcType reflect.Type) bool {
+	return funcType.Out(0).Kind() != reflect.Bool
+}
+
 func applyPredicate(o *optionalImpl, funcValue reflect.Value) Optional {
 	valValue := reflect.ValueOf(o.value)
 	valType := valValue.Type()
@@ -23,17 +35,6 @@ func applyPredicate(o *optionalImpl, funcValue reflect.Value) Optional {
 	predicateIsTrue := funcValue.Call([]reflect.Value{valValue})[0].Bool()
 	if predicateIsTrue {
 		return o
-	} else {
-		return Empty()
 	}
-}
-
-func checkIfTypeIsPredicate(funcType reflect.Type) {
-	if isNotFunction(funcType) || isNotOneToOneFunction(funcType) || isNotPredicate(funcType) {
-		panic("Argument must be a predicate function.")
-	}
-}
-
-func isNotPredicate(funcType reflect.Type) bool {
-	return funcType.Out(0).Kind() != reflect.Bool
+	return Empty()
 }
