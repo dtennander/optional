@@ -23,4 +23,14 @@ func getNameOfNext(queue Queue) (str opt.Optional) {
 		return p.GetName()
 	})
 }
+
+func getNameOfNextOrGopher(queue Queue) string {
+	return getNameOfNext(queue).OrElse("Gopher!").(string)
+}
+
+func isFirstPersonGopher(queue Queue) bool {
+	return getNameOfNext(queue).Filter(func(s string) bool {
+		return s == "Gopher"
+	}).OrElse(false).(bool)
+}
 ```

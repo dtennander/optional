@@ -7,6 +7,7 @@ type Optional interface {
 	Get() interface{}
 	Map(mapFunc interface{}) Optional
 	Filter(predicate interface{}) Optional
+	OrElse(defaultValue interface{}) interface{}
 }
 
 type optionalImpl struct {
@@ -16,6 +17,14 @@ type optionalImpl struct {
 
 func (o *optionalImpl) Get() interface{} {
 	return o.value
+}
+
+func (o *optionalImpl) OrElse(defaultValue interface{}) interface{} {
+	if o.isPresent {
+		return o.value
+	} else {
+		return defaultValue
+	}
 }
 
 func (o *optionalImpl) IsPresent() bool {

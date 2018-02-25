@@ -46,6 +46,26 @@ func TestOfNil(t *testing.T) {
 
 }
 
+func TestOptionalImpl_OrElse(t *testing.T) {
+	// Given
+	a := Of(1)
+	// When
+	result := a.OrElse(2)
+
+	// Then
+	assert.Equal(t, 1, result)
+}
+
+func TestOptionalImpl_OrElse2(t *testing.T) {
+	// Given
+	a := Empty()
+	// When
+	result := a.OrElse("Default")
+
+	// Then
+	assert.Equal(t, "Default", result)
+}
+
 func TestEmpty(t *testing.T) {
 	// Given
 	a := Empty()
