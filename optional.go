@@ -16,7 +16,11 @@ type optionalImpl struct {
 }
 
 func (o *optionalImpl) Get() interface{} {
-	return o.value
+	if o.isPresent {
+		return o.value
+	} else {
+		panic("Accessing empty Optional.")
+	}
 }
 
 func (o *optionalImpl) OrElse(defaultValue interface{}) interface{} {

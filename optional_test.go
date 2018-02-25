@@ -24,6 +24,26 @@ func TestOptionalImpl_IsPresent(t *testing.T) {
 	assert.True(t, result)
 }
 
+func TestOptionalImpl_Get(t *testing.T) {
+	// Given
+	a := Of(1)
+	// When
+	value := a.Get()
+	// Then
+	assert.Equal(t, 1, value)
+}
+
+func TestOptionalImpl_Get2(t *testing.T) {
+	// Given
+	a := Empty()
+	// When
+	evilCode := func() {
+		a.Get()
+	}
+	// Then
+	assert.PanicsWithValue(t, "Accessing empty Optional.", evilCode)
+}
+
 func TestOf(t *testing.T) {
 	// Given
 	a := mockObject{value: 1}
