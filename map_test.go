@@ -49,3 +49,15 @@ func TestMapOnEmpty(t *testing.T) {
 	// Then
 	assert.False(t, b.IsPresent())
 }
+
+// Mapping to nil should generate an Empty Optional.
+func TestOptionalImpl_Map4(t *testing.T) {
+	//Given
+	a := Of(1)
+	// When
+	result := a.Map(func(i int) *mockObject {
+		return nil
+	})
+	// Then
+	assert.False(t, result.IsPresent())
+}

@@ -35,5 +35,5 @@ func mapValue(o *optionalImpl, funcValue reflect.Value) Optional {
 	}
 	result := funcValue.Call([]reflect.Value{valValue})[0]
 	// Convert resulting slice back to generic interface.
-	return Of(result.Interface())
+	return OfPossibleNil(result.Interface())
 }
