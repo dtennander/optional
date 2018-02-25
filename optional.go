@@ -1,4 +1,4 @@
-// Package Optional is a library constructed to allow for optional return values.
+// Package optional is a library constructed to allow for optional return values.
 // Thus allowing the end user of APIs to get a nicer syntax in the end code.
 // Instead of
 //   val, err := vendor.getThing()
