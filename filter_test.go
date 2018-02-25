@@ -18,10 +18,10 @@ func TestOptionalImpl_Filter(t *testing.T) {
 
 func TestOptionalImpl_Filter2(t *testing.T) {
 	// Given
-	a := getOptional(1)
+	a := Of(1)
 	// When
-	b := a.Filter(func(a mockObject) bool {
-		return a.value > 1
+	b := a.Filter(func(i int) bool {
+		return i > 1
 	})
 	// Then
 	assert.False(t, b.IsPresent())
@@ -41,7 +41,7 @@ func TestOptionalImpl_Filter3(t *testing.T) {
 
 func TestOptionalImpl_Filter4(t *testing.T) {
 	// Given
-	a := getOptional(1)
+	a := Of(1)
 	evilPredicate := func(a int) int { return a }
 	// When
 	evilCall := func() {
@@ -55,7 +55,7 @@ func TestFilterOnEmpty(t *testing.T) {
 	// Given
 	a := Empty()
 	// When
-	b := a.Filter(func(a mockObject) bool {
+	b := a.Filter(func(a int) bool {
 		return true
 	})
 	// Then

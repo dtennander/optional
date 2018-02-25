@@ -7,14 +7,13 @@ import (
 
 func TestOptionalImpl_Map(t *testing.T) {
 	// Given
-	optA := getOptional(1)
+	optA := Of(1)
 	// When
-	optB := optA.Map(func(a mockObject) mockObject {
-		a.value += 1
-		return a
+	optB := optA.Map(func(a int) int {
+		return a+1
 	})
 	// Then
-	assert.Equal(t, mockObject{value:2}, optB.Get())
+	assert.Equal(t, 2, optB.Get())
 }
 
 func TestOptionalImpl_Map2(t *testing.T) {
@@ -31,7 +30,7 @@ func TestOptionalImpl_Map2(t *testing.T) {
 
 func TestOptionalImpl_Map3(t *testing.T) {
 	// Given
-	a := getOptional(1)
+	a := Of(1)
 	// When
 	evilCall := func() {
 		a.Map(1) // Not a function
@@ -46,7 +45,7 @@ func TestMapOnEmpty(t *testing.T) {
 	// Given
 	a := Empty()
 	// When
-	b := a.Map(func(a mockObject) mockObject{
+	b := a.Map(func(a int) int{
 		return a
 	})
 	// Then
