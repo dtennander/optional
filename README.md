@@ -1,4 +1,5 @@
 # Optional
+### [![Build Status](https://travis-ci.org/DiTo04/optional.svg?branch=master)](https://travis-ci.org/DiTo04/optional)
 
 This is a small library for us that is strong users of `Optional<>` in Java
 and would like the same paradigm in Go.
