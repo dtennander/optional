@@ -59,6 +59,24 @@ func TestIsInvalidMap(t *testing.T) {
 	assert.Equal(t, false, result)
 }
 
+func TestIsValidSupplier(t *testing.T) {
+	// Given
+	consumer := func() int { return 1 }
+	// When
+	result := IsValid(Supplier, consumer)
+	// Then
+	assert.Equal(t, true, result)
+}
+
+func TestIsInvalidSupplier(t *testing.T) {
+	// Given
+	consumer := func(i int) int { return i + 1 }
+	// When
+	result := IsValid(Supplier, consumer)
+	// Then
+	assert.Equal(t, false, result)
+}
+
 func TestTakesArgument(t *testing.T) {
 	// Given
 	consumer := func(i int) {}
@@ -75,4 +93,13 @@ func TestTakesArgument2(t *testing.T) {
 	result := TakesArgument(consumer, 1)
 	// Then
 	assert.False(t, result)
+}
+
+func TestCallSupplier(t *testing.T) {
+	// Given
+	supplier := func() int { return 1 }
+	// When
+	result := CallSupplier(supplier)
+	// Then
+	assert.Equal(t, 1, result)
 }
