@@ -37,9 +37,21 @@ func Of(nonNilValue interface{}) Optional {
 }
 
 func assertNotNil(nonNilValue interface{}) {
-	value := reflect.ValueOf(nonNilValue)
-	if value.Kind() == reflect.Ptr && value.IsNil() {
+	if isNil(nonNilValue) {
 		panic("nonNilValue can not be nil!")
+	}
+}
+
+func isNil(possibleNil interface{}) bool {
+	value := reflect.ValueOf(possibleNil)
+	return value.Kind() == reflect.Ptr && value.IsNil()
+}
+
+func OfPossibleNil(value interface{}) Optional {
+	if isNil(value) {
+		return Empty()
+	} else {
+		return Of(value)
 	}
 }
 
