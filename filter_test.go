@@ -1,8 +1,8 @@
 package optional
 
 import (
-	"testing"
 	"github.com/stretchr/testify/assert"
+	"testing"
 )
 
 func TestOptionalImpl_Filter(t *testing.T) {

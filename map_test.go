@@ -1,8 +1,8 @@
 package optional
 
 import (
-	"testing"
 	"github.com/stretchr/testify/assert"
+	"testing"
 )
 
 func TestOptionalImpl_Map(t *testing.T) {
@@ -10,7 +10,7 @@ func TestOptionalImpl_Map(t *testing.T) {
 	optA := Of(1)
 	// When
 	optB := optA.Map(func(a int) int {
-		return a+1
+		return a + 1
 	})
 	// Then
 	assert.Equal(t, 2, optB.Get())
@@ -39,13 +39,11 @@ func TestOptionalImpl_Map3(t *testing.T) {
 	assert.PanicsWithValue(t, "Argument must be a mapping function.", evilCall)
 }
 
-
-
 func TestMapOnEmpty(t *testing.T) {
 	// Given
 	a := Empty()
 	// When
-	b := a.Map(func(a int) int{
+	b := a.Map(func(a int) int {
 		return a
 	})
 	// Then

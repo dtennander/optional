@@ -1,23 +1,17 @@
 package optional
 
 import (
-	"testing"
 	"github.com/stretchr/testify/assert"
+	"testing"
 )
 
 type mockObject struct {
 	value int32
 }
 
-func getOptional(value int32) Optional {
-	a := mockObject{value: value}
-	optA := Of(a)
-	return optA
-}
-
 func TestOptionalImpl_IsPresent(t *testing.T) {
 	// Given
-	opt := getOptional(1)
+	opt := Of(1)
 	// When
 	result := opt.IsPresent()
 	// Then
@@ -51,7 +45,7 @@ func TestOf(t *testing.T) {
 	result := Of(a)
 	// Then
 	assert.Implements(t, (*Optional)(nil), result)
-	assert.Equal(t,a, result.Get())
+	assert.Equal(t, a, result.Get())
 }
 
 func TestOfNil(t *testing.T) {
@@ -62,7 +56,7 @@ func TestOfNil(t *testing.T) {
 		Of(a)
 	}
 	// Then
-	assert.PanicsWithValue(t,"nonNilValue can not be nil!", evilCode)
+	assert.PanicsWithValue(t, "nonNilValue can not be nil!", evilCode)
 
 }
 

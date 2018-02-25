@@ -2,6 +2,8 @@ package optional
 
 import "reflect"
 
+// The Optional type represents a possible value that might be there.
+// It offers a API that allows for manipulating the possible value returning defaults.
 type Optional interface {
 	IsPresent() bool
 	Get() interface{}
@@ -12,9 +14,11 @@ type Optional interface {
 
 type optionalImpl struct {
 	isPresent bool
-	value interface{}
+	value     interface{}
 }
 
+// Returns the value contained in the Optional.
+// Will panic if called on an empty Optional.
 func (o *optionalImpl) Get() interface{} {
 	if o.isPresent {
 		return o.value
@@ -23,6 +27,7 @@ func (o *optionalImpl) Get() interface{} {
 	}
 }
 
+// Returns the value if a value is present else it returns the defaultValue.
 func (o *optionalImpl) OrElse(defaultValue interface{}) interface{} {
 	if o.isPresent {
 		return o.value
@@ -31,10 +36,12 @@ func (o *optionalImpl) OrElse(defaultValue interface{}) interface{} {
 	}
 }
 
+// Returns true if the Optional contains a value.
 func (o *optionalImpl) IsPresent() bool {
 	return o.isPresent
 }
 
+// Of constructs an Optional from a value separate from nil.
 func Of(nonNilValue interface{}) Optional {
 	assertNotNil(nonNilValue)
 	return &optionalImpl{isPresent: true, value: nonNilValue}
@@ -51,6 +58,8 @@ func isNil(possibleNil interface{}) bool {
 	return value.Kind() == reflect.Ptr && value.IsNil()
 }
 
+// OfPossibleNil construct an Optional from a given value.
+// If the value is nil a empty Optional is returned.
 func OfPossibleNil(value interface{}) Optional {
 	if isNil(value) {
 		return Empty()
@@ -59,6 +68,7 @@ func OfPossibleNil(value interface{}) Optional {
 	}
 }
 
+// Empty constructs an empty optional.
 func Empty() Optional {
-	return &optionalImpl{isPresent:false, value:nil}
+	return &optionalImpl{isPresent: false, value: nil}
 }

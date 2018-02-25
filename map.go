@@ -2,14 +2,16 @@ package optional
 
 import "reflect"
 
+// If a value is present the mapFunc is applied to the contained value and
+// the result is returned as an optional.
+// If called on an empty Optional an Empty optional is returned.
 func (o *optionalImpl) Map(mapFunc interface{}) Optional {
 	funcValue := reflect.ValueOf(mapFunc)
 	checkIfTypeIsMap(funcValue.Type())
 	if o.isPresent {
 		return mapValue(o, funcValue)
-	} else {
-		return Empty()
 	}
+	return Empty()
 }
 
 func checkIfTypeIsMap(funcType reflect.Type) {
