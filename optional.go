@@ -1,3 +1,13 @@
+// Package Optional is a library constructed to allow for optional return values.
+// Thus allowing the end user of APIs to get a nicer syntax in the end code.
+// Instead of
+//   val, err := vendor.getThing()
+//   if err != nil {
+//       return nil
+//   }
+//   return doStuff(val)
+// One could write code:
+//   vendor.getThing().Map(doStuff).orElse(nil)
 package optional
 
 import "reflect"
@@ -47,9 +57,9 @@ func isNil(possibleNil interface{}) bool {
 func OfPossibleNil(value interface{}) Optional {
 	if isNil(value) {
 		return Empty()
-	} else {
-		return Of(value)
 	}
+	return Of(value)
+
 }
 
 // Empty constructs an empty optional.
@@ -63,19 +73,17 @@ type optionalImpl struct {
 }
 
 func (o *optionalImpl) Get() interface{} {
-	if o.isPresent {
-		return o.value
-	} else {
+	if !o.isPresent {
 		panic("Accessing empty Optional.")
 	}
+	return o.value
 }
 
 func (o *optionalImpl) OrElse(defaultValue interface{}) interface{} {
 	if o.isPresent {
 		return o.value
-	} else {
-		return defaultValue
 	}
+	return defaultValue
 }
 
 func (o *optionalImpl) IsPresent() bool {

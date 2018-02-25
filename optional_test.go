@@ -50,7 +50,7 @@ func TestOf(t *testing.T) {
 
 func TestOfNil(t *testing.T) {
 	// Given
-	var a *mockObject = nil
+	var a *mockObject
 	// When
 	evilCode := func() {
 		Of(a)
@@ -62,7 +62,7 @@ func TestOfNil(t *testing.T) {
 
 func TestOfPossibleNil(t *testing.T) {
 	// Given
-	var a *mockObject = nil
+	var a *mockObject
 	// When
 	optional := OfPossibleNil(a)
 	// Then
