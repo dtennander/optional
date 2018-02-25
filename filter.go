@@ -2,8 +2,6 @@ package optional
 
 import "reflect"
 
-// Returns an empty Optional if the predicate is not met.
-// Otherwise the current value is passed along.
 func (o *optionalImpl) Filter(predicateFunc interface{}) Optional {
 	funcValue := reflect.ValueOf(predicateFunc)
 	checkIfTypeIsPredicate(funcValue.Type())
