@@ -1,5 +1,5 @@
 # Optional
-### [![Build Status](https://travis-ci.org/DiTo04/optional.svg?branch=master)](https://travis-ci.org/DiTo04/optional)
+### [![Build Status](https://travis-ci.org/DiTo04/optional.svg?branch=master)](https://travis-ci.org/DiTo04/optional) [![Go Report Card](https://goreportcard.com/badge/github.com/DiTo04/optional)](https://goreportcard.com/report/github.com/DiTo04/optional) [![GoDoc](https://godoc.org/github.com/DiTo04/optional?status.svg)](https://godoc.org/github.com/DiTo04/optional)
 
 This is a small library containing the functionality given to Java by `Optional<>`.
 It allows Go users to reduce `nil` checks and creates more readable code.
